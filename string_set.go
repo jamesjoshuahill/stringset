@@ -4,12 +4,21 @@ type StringSet struct {
 	set map[string]struct{}
 }
 
-func New(slice []string) StringSet {
+func New() StringSet {
 	set := make(map[string]struct{})
-	for _, element := range slice {
-		set[element] = struct{}{}
-	}
 	return StringSet{set: set}
+}
+
+func (s StringSet) Add(member string) StringSet {
+	s.set[member] = struct{}{}
+	return s
+}
+
+func (s StringSet) AddSlice(slice []string) StringSet {
+	for _, element := range slice {
+		s.Add(element)
+	}
+	return s
 }
 
 func (s StringSet) Contains(member string) bool {
@@ -18,10 +27,10 @@ func (s StringSet) Contains(member string) bool {
 }
 
 func (s StringSet) Subtract(other StringSet) StringSet {
-	difference := New([]string{})
+	difference := New()
 	for member, _ := range s.set {
 		if !other.Contains(member) {
-			difference.set[member] = struct{}{}
+			difference.Add(member)
 		}
 	}
 	return difference
