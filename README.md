@@ -1,11 +1,14 @@
 # stringset
 
-Go convenience type to check if a slice of strings contains a string.
+Go convenience type for sets of strings.
 
 ```go
-  set := stringset.New([]string{"monkeys", "bananas", "trees"})
+  jungle := stringset.New().Add("monkeys")
+  jungle.Contains("bananas")  // false
 
-  if set.Contains("monkeys") {
-    // jump up and down!
-  }
+  jungle.AddSlice([]string{"bananas", "trees"})
+  jungle.Contains("bananas")  // true
+
+  forest := stringset.New().AddSlice([]string{"trees", "wolves"})
+  jungle.Subtract(forest)  //  <StringSet>{"monkeys","bananas"}
 ```
