@@ -21,4 +21,20 @@ var _ = Describe("StringSet", func() {
 			Expect(set.Contains("monkey")).To(BeFalse())
 		})
 	})
+
+	Context("when the other set has a member in common", func() {
+		It("subtracts the member in common", func() {
+			set := stringset.New([]string{"monkeys", "bananas"})
+			other := stringset.New([]string{"bananas"})
+			Expect(set.Subtract(other)).To(Equal(stringset.New([]string{"monkeys"})))
+		})
+	})
+
+	Context("when the other set has nothing in common", func() {
+		It("does not subtract any members", func() {
+			set := stringset.New([]string{"monkeys", "bananas"})
+			other := stringset.New([]string{"trees", "sunshine"})
+			Expect(set.Subtract(other)).To(Equal(stringset.New([]string{"monkeys", "bananas"})))
+		})
+	})
 })
