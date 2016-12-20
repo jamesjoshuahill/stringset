@@ -20,6 +20,14 @@ var _ = Describe("StringSet", func() {
 		})
 	})
 
+	Context("when it has some members", func() {
+		It("produces a sorted list of members", func() {
+			set := stringset.New().AddSlice([]string{"monkey", "bananas", "trees", "sunshine"})
+			sortedList := []string{"bananas", "monkey", "sunshine", "trees"}
+			Expect(set.Members()).To(Equal(sortedList))
+		})
+	})
+
 	Context("when the other set has a member in common", func() {
 		It("subtracts the member in common", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})

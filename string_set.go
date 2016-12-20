@@ -1,5 +1,7 @@
 package stringset
 
+import "sort"
+
 type StringSet struct {
 	set map[string]struct{}
 }
@@ -19,6 +21,15 @@ func (s StringSet) AddSlice(slice []string) StringSet {
 		s.Add(element)
 	}
 	return s
+}
+
+func (s StringSet) Members() []string {
+	members := []string{}
+	for member, _ := range s.set {
+		members = append(members, member)
+	}
+	sort.Strings(members)
+	return members
 }
 
 func (s StringSet) Contains(member string) bool {
