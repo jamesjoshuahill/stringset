@@ -35,3 +35,13 @@ func (s StringSet) Subtract(other StringSet) StringSet {
 	}
 	return difference
 }
+
+func (s StringSet) Intersection(other StringSet) StringSet {
+	intersection := New()
+	for member, _ := range s.set {
+		if other.Contains(member) {
+			intersection.Add(member)
+		}
+	}
+	return intersection
+}
