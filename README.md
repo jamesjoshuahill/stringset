@@ -2,13 +2,23 @@
 
 Go convenience type for sets of strings.
 
+## Contains
 ```go
-  jungle := stringset.New().Add("monkeys")
-  jungle.Contains("bananas")  // false
+set := stringset.New().Add("monkeys")
+set.Contains("bananas")  // false
+```
 
-  jungle.AddSlice([]string{"bananas", "trees"})
-  jungle.Contains("bananas")  // true
+## Members
+```go
+jungle := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
+jungle.Members()  //  []string{"bananas", "monkeys", "trees"}
+```
 
-  forest := stringset.New().AddSlice([]string{"trees", "wolves"})
-  jungle.Subtract(forest)  //  <StringSet>{"monkeys","bananas"}
+## Set operations
+```
+jungle := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
+forest := stringset.New().AddSlice([]string{"trees", "wolves"})
+
+jungle.Subtract(forest)      //  StringSet:{"monkeys", "bananas"}
+jungle.Intersection(forest)  //  StringSet:{"trees"}
 ```
