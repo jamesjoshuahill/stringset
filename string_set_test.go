@@ -8,20 +8,46 @@ import (
 )
 
 var _ = Describe("StringSet", func() {
+	Context("when empty", func() {
+		It("does not contain a member", func() {
+			emptySet := stringset.New()
+			Expect(emptySet.Contains("monkeys")).To(BeFalse())
+		})
+
+		It("lists no members", func() {
+			emptySet := stringset.New()
+			Expect(emptySet.Members()).To(BeEmpty())
+		})
+
+		Context("when the other set has a member", func() {
+			It("subtracts nothing", func() {
+				emptySet := stringset.New()
+				other := stringset.New().Add("trees")
+				Expect(emptySet.Subtract(other)).To(Equal(emptySet))
+			})
+
+			It("has no members in common", func() {
+				emptySet := stringset.New()
+				other := stringset.New().Add("trees")
+				Expect(emptySet.Intersection(other)).To(Equal(emptySet))
+			})
+		})
+	})
+
 	Context("when it has one member", func() {
-		It("knows it contains the member", func() {
+		It("contains the member", func() {
 			set := stringset.New().Add("monkeys")
 			Expect(set.Contains("monkeys")).To(BeTrue())
 		})
 
-		It("knows it does not contain another member", func() {
+		It("does not contain another member", func() {
 			set := stringset.New().Add("bananas")
 			Expect(set.Contains("monkeys")).To(BeFalse())
 		})
 	})
 
 	Context("when it has some members", func() {
-		It("produces a sorted list of members", func() {
+		It("lists all members alphabetically", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees", "sunshine"})
 			sortedList := []string{"bananas", "monkeys", "sunshine", "trees"}
 			Expect(set.Members()).To(Equal(sortedList))
@@ -35,7 +61,7 @@ var _ = Describe("StringSet", func() {
 			Expect(set.Subtract(other)).To(Equal(stringset.New().Add("monkeys")))
 		})
 
-		It("knows which member is in common", func() {
+		It("intersects with the member", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
 			other := stringset.New().Add("bananas")
 			Expect(set.Intersection(other)).To(Equal(stringset.New().Add("bananas")))
@@ -49,7 +75,7 @@ var _ = Describe("StringSet", func() {
 			Expect(set.Subtract(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
 		})
 
-		It("knows no members are in common", func() {
+		It("does not intersect", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
 			other := stringset.New().Add("trees")
 			Expect(set.Intersection(other)).To(Equal(stringset.New()))
