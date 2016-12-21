@@ -31,6 +31,13 @@ func (s StringSet) AddSlice(slice []string) StringSet {
 	return s
 }
 
+func (s StringSet) AddSet(other StringSet) StringSet {
+	for member, _ := range other.set {
+		s.Add(member)
+	}
+	return s
+}
+
 func (s StringSet) Members() []string {
 	members := []string{}
 	for member, _ := range s.set {
@@ -63,4 +70,11 @@ func (s StringSet) Intersection(other StringSet) StringSet {
 		}
 	}
 	return intersection
+}
+
+func (s StringSet) Union(other StringSet) StringSet {
+	union := New()
+	union.AddSet(s)
+	union.AddSet(other)
+	return union
 }

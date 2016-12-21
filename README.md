@@ -18,4 +18,5 @@ forest := stringset.New().AddSlice([]string{"trees", "wolves"})
 
 jungle.Subtract(forest)      //  {monkeys bananas}
 jungle.Intersection(forest)  //  {trees}
+jungle.Union(forest)         //  {monkeys bananas trees wolves}
 ```

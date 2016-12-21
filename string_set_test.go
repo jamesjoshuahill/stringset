@@ -38,6 +38,13 @@ var _ = Describe("StringSet", func() {
 				other := stringset.New().Add("trees")
 				Expect(emptySet.Intersection(other)).To(Equal(emptySet))
 			})
+
+			It("includes all members in the union", func() {
+				emptySet := stringset.New()
+				other := stringset.New().Add("trees")
+				Expect(emptySet.Union(other)).To(Equal(other))
+				Expect(emptySet).To(Equal(stringset.New()))
+			})
 		})
 	})
 
@@ -83,6 +90,13 @@ var _ = Describe("StringSet", func() {
 			other := stringset.New().Add("bananas")
 			Expect(set.Intersection(other)).To(Equal(stringset.New().Add("bananas")))
 		})
+
+		It("includes all members in the union", func() {
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
+			other := stringset.New().Add("bananas")
+			Expect(set.Union(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+		})
 	})
 
 	Context("when the other set has nothing in common", func() {
@@ -96,6 +110,13 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
 			other := stringset.New().Add("trees")
 			Expect(set.Intersection(other)).To(Equal(stringset.New()))
+		})
+
+		It("includes all members in the union", func() {
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
+			other := stringset.New().Add("trees")
+			Expect(set.Union(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})))
+			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
 		})
 	})
 })
