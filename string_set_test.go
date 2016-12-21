@@ -10,20 +10,20 @@ import (
 var _ = Describe("StringSet", func() {
 	Context("when it has one member", func() {
 		It("knows it contains the member", func() {
-			set := stringset.New().Add("monkey")
-			Expect(set.Contains("monkey")).To(BeTrue())
+			set := stringset.New().Add("monkeys")
+			Expect(set.Contains("monkeys")).To(BeTrue())
 		})
 
 		It("knows it does not contain another member", func() {
 			set := stringset.New().Add("bananas")
-			Expect(set.Contains("monkey")).To(BeFalse())
+			Expect(set.Contains("monkeys")).To(BeFalse())
 		})
 	})
 
 	Context("when it has some members", func() {
 		It("produces a sorted list of members", func() {
-			set := stringset.New().AddSlice([]string{"monkey", "bananas", "trees", "sunshine"})
-			sortedList := []string{"bananas", "monkey", "sunshine", "trees"}
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees", "sunshine"})
+			sortedList := []string{"bananas", "monkeys", "sunshine", "trees"}
 			Expect(set.Members()).To(Equal(sortedList))
 		})
 	})
