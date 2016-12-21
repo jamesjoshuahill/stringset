@@ -1,6 +1,10 @@
 package stringset
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+	"strings"
+)
 
 type StringSet struct {
 	set map[string]struct{}
@@ -9,6 +13,10 @@ type StringSet struct {
 func New() StringSet {
 	set := make(map[string]struct{})
 	return StringSet{set: set}
+}
+
+func (s StringSet) String() string {
+	return fmt.Sprintf("{%s}", strings.Join(s.Members(), " "))
 }
 
 func (s StringSet) Add(member string) StringSet {

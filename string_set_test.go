@@ -1,6 +1,8 @@
 package stringset_test
 
 import (
+	"fmt"
+
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 
@@ -17,6 +19,11 @@ var _ = Describe("StringSet", func() {
 		It("lists no members", func() {
 			emptySet := stringset.New()
 			Expect(emptySet.Members()).To(BeEmpty())
+		})
+
+		It("prints neatly", func() {
+			emptySet := stringset.New()
+			Expect(fmt.Sprintf("%v", emptySet)).To(Equal(`{}`))
 		})
 
 		Context("when the other set has a member", func() {
@@ -44,6 +51,11 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New().Add("bananas")
 			Expect(set.Contains("monkeys")).To(BeFalse())
 		})
+
+		It("prints neatly", func() {
+			set := stringset.New().Add("monkeys")
+			Expect(fmt.Sprintf("%v", set)).To(Equal(`{monkeys}`))
+		})
 	})
 
 	Context("when it has some members", func() {
@@ -51,6 +63,11 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees", "sunshine"})
 			sortedList := []string{"bananas", "monkeys", "sunshine", "trees"}
 			Expect(set.Members()).To(Equal(sortedList))
+		})
+
+		It("prints neatly", func() {
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees", "sunshine"})
+			Expect(fmt.Sprintf("%v", set)).To(Equal(`{bananas monkeys sunshine trees}`))
 		})
 	})
 

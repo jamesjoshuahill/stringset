@@ -8,7 +8,7 @@ animals := stringset.New().Add("monkeys")
 animals.Contains("bananas")  // false
 
 jungle := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
-jungle.Members()  //  []string{"bananas", "monkeys", "trees"}
+jungle.Members()  //  [bananas monkeys trees]
 ```
 
 ## Set operations
@@ -16,6 +16,6 @@ jungle.Members()  //  []string{"bananas", "monkeys", "trees"}
 jungle := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
 forest := stringset.New().AddSlice([]string{"trees", "wolves"})
 
-jungle.Subtract(forest)      //  StringSet:{"monkeys", "bananas"}
-jungle.Intersection(forest)  //  StringSet:{"trees"}
+jungle.Subtract(forest)      //  {monkeys bananas}
+jungle.Intersection(forest)  //  {trees}
 ```
