@@ -2,20 +2,17 @@
 
 Go convenience type for sets of strings.
 
-## Contains
+## Membership
 ```go
-set := stringset.New().Add("monkeys")
-set.Contains("bananas")  // false
-```
+animals := stringset.New().Add("monkeys")
+animals.Contains("bananas")  // false
 
-## Members
-```go
 jungle := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
 jungle.Members()  //  []string{"bananas", "monkeys", "trees"}
 ```
 
 ## Set operations
-```
+```go
 jungle := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
 forest := stringset.New().AddSlice([]string{"trees", "wolves"})
 
