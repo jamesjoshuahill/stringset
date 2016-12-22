@@ -78,3 +78,9 @@ func (s StringSet) Union(other StringSet) StringSet {
 	union.AddSet(other)
 	return union
 }
+
+func (s StringSet) SymmetricDifference(other StringSet) StringSet {
+	union := s.Union(other)
+	intersection := s.Intersection(other)
+	return union.Subtract(intersection)
+}

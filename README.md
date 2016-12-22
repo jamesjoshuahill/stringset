@@ -16,7 +16,8 @@ jungle.Members()  //  [bananas monkeys trees]
 jungle := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
 forest := stringset.New().AddSlice([]string{"trees", "wolves"})
 
-jungle.Subtract(forest)      //  {monkeys bananas}
-jungle.Intersection(forest)  //  {trees}
-jungle.Union(forest)         //  {monkeys bananas trees wolves}
+jungle.Intersection(forest)         //  {trees}
+jungle.Subtract(forest)             //  {monkeys bananas}
+jungle.SymmetricDifference(forest)  //  {monkeys bananas wolves}
+jungle.Union(forest)                //  {monkeys bananas trees wolves}
 ```

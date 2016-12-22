@@ -43,6 +43,17 @@ var _ = Describe("StringSet", func() {
 				emptySet := stringset.New()
 				other := stringset.New().Add("trees")
 				Expect(emptySet.Union(other)).To(Equal(other))
+
+				By("not changing the set")
+				Expect(emptySet).To(Equal(stringset.New()))
+			})
+
+			It("includes the member in the symmetric difference", func() {
+				emptySet := stringset.New()
+				other := stringset.New().Add("trees")
+				Expect(emptySet.SymmetricDifference(other)).To(Equal(other))
+
+				By("not changing the set")
 				Expect(emptySet).To(Equal(stringset.New()))
 			})
 		})
@@ -95,6 +106,17 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
 			other := stringset.New().Add("bananas")
 			Expect(set.Union(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+		})
+
+		It("subtracts the member in common from the symmetric difference", func() {
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
+			other := stringset.New().Add("bananas")
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys"})))
+
+			By("not changing the set")
 			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
 		})
 	})
@@ -116,6 +138,17 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
 			other := stringset.New().Add("trees")
 			Expect(set.Union(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})))
+
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+		})
+
+		It("includes all members in the symmetric difference", func() {
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
+			other := stringset.New().Add("trees")
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})))
+
+			By("not changing the set")
 			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
 		})
 	})
