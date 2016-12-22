@@ -1,5 +1,7 @@
 # stringset
 
+[![Build Status](https://travis-ci.org/jamesjoshuahill/stringset.svg?branch=master)](https://travis-ci.org/jamesjoshuahill/stringset)
+
 Go convenience type for sets of strings.
 
 ## Membership
