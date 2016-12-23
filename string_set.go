@@ -44,7 +44,7 @@ func (s StringSet) Contains(member string) bool {
 // Members returns a slice of the members of s.
 func (s StringSet) Members() []string {
 	members := []string{}
-	for member, _ := range s.set {
+	for member := range s.set {
 		members = append(members, member)
 	}
 	return members
@@ -52,7 +52,7 @@ func (s StringSet) Members() []string {
 
 // IsSubset returns true if s is a subset of other.
 func (s StringSet) IsSubset(other StringSet) bool {
-	for member, _ := range s.set {
+	for member := range s.set {
 		if !other.Contains(member) {
 			return false
 		}
@@ -73,7 +73,7 @@ func (s StringSet) IsSuperset(other StringSet) bool {
 // Subtract returns a StringSet of members of s not in other.
 func (s StringSet) Subtract(other StringSet) StringSet {
 	var difference []string
-	for member, _ := range s.set {
+	for member := range s.set {
 		if !other.Contains(member) {
 			difference = append(difference, member)
 		}
@@ -84,7 +84,7 @@ func (s StringSet) Subtract(other StringSet) StringSet {
 // Intersection returns a StringSet of members in both s and other.
 func (s StringSet) Intersection(other StringSet) StringSet {
 	var intersection []string
-	for member, _ := range s.set {
+	for member := range s.set {
 		if other.Contains(member) {
 			intersection = append(intersection, member)
 		}

@@ -1,6 +1,6 @@
 # stringset
 
-[![Build Status](https://travis-ci.org/jamesjoshuahill/stringset.svg?branch=master)](https://travis-ci.org/jamesjoshuahill/stringset) [![GoDoc](https://godoc.org/github.com/jamesjoshuahill/stringset?status.svg)](https://godoc.org/github.com/jamesjoshuahill/stringset)
+[![Build Status](https://travis-ci.org/jamesjoshuahill/stringset.svg?branch=master)](https://travis-ci.org/jamesjoshuahill/stringset) [![GoDoc](https://godoc.org/github.com/jamesjoshuahill/stringset?status.svg)](https://godoc.org/github.com/jamesjoshuahill/stringset) [![Go Report Card](https://goreportcard.com/badge/github.com/jamesjoshuahill/stringset)](https://goreportcard.com/report/github.com/jamesjoshuahill/stringset)
 
 Go value type for sets of strings.
 
