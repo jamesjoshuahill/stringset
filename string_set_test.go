@@ -77,15 +77,23 @@ var _ = Describe("StringSet", func() {
 	})
 
 	Context("when it has some members", func() {
-		It("lists all members alphabetically", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees", "sunshine"})
-			sortedList := []string{"bananas", "monkeys", "sunshine", "trees"}
-			Expect(set.Members()).To(Equal(sortedList))
+		It("lists all members", func() {
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
+			Expect(set.Members()).To(ContainElement("monkeys"))
+			Expect(set.Members()).To(ContainElement("bananas"))
+			Expect(set.Members()).To(ContainElement("trees"))
 		})
 
 		It("prints neatly", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees", "sunshine"})
-			Expect(fmt.Sprintf("%v", set)).To(Equal(`{bananas monkeys sunshine trees}`))
+			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
+			Expect(fmt.Sprintf("%v", set)).To(Or(
+				Equal(`{bananas monkeys trees}`),
+				Equal(`{bananas trees monkeys}`),
+				Equal(`{monkeys bananas trees}`),
+				Equal(`{monkeys trees bananas}`),
+				Equal(`{trees bananas monkeys}`),
+				Equal(`{trees monkeys bananas}`),
+			))
 		})
 	})
 

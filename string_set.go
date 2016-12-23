@@ -2,7 +2,6 @@ package stringset
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 )
 
@@ -43,7 +42,6 @@ func (s StringSet) Members() []string {
 	for member, _ := range s.set {
 		members = append(members, member)
 	}
-	sort.Strings(members)
 	return members
 }
 
