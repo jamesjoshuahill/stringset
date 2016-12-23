@@ -26,6 +26,11 @@ var _ = Describe("StringSet", func() {
 			Expect(fmt.Sprintf("%v", emptySet)).To(Equal(`{}`))
 		})
 
+		It("is empty", func() {
+			emptySet := stringset.New()
+			Expect(emptySet.Empty()).To(BeTrue())
+		})
+
 		Context("when the other set has a member", func() {
 			It("subtracts nothing", func() {
 				emptySet := stringset.New()
@@ -74,6 +79,11 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New("monkeys")
 			Expect(fmt.Sprintf("%v", set)).To(Equal(`{monkeys}`))
 		})
+
+		It("is not empty", func() {
+			set := stringset.New("monkeys")
+			Expect(set.Empty()).To(BeFalse())
+		})
 	})
 
 	Context("when it has some members", func() {
@@ -94,6 +104,11 @@ var _ = Describe("StringSet", func() {
 				Equal(`{trees bananas monkeys}`),
 				Equal(`{trees monkeys bananas}`),
 			))
+		})
+
+		It("is not empty", func() {
+			set := stringset.New("monkeys", "bananas", "trees")
+			Expect(set.Empty()).To(BeFalse())
 		})
 	})
 

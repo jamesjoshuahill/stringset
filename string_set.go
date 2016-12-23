@@ -21,6 +21,10 @@ func (s StringSet) String() string {
 	return fmt.Sprintf("{%s}", strings.Join(s.Members(), " "))
 }
 
+func (s StringSet) Empty() bool {
+	return len(s.set) == 0
+}
+
 func (s StringSet) Members() []string {
 	members := []string{}
 	for member, _ := range s.set {
