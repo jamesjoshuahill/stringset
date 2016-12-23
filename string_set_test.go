@@ -270,6 +270,47 @@ var _ = Describe("StringSet", func() {
 		})
 	})
 
+	Context("when it has members and equals the other set", func() {
+		BeforeEach(func() {
+			set = stringset.New("monkeys", "bananas", "trees")
+			other = stringset.New("monkeys", "bananas", "trees")
+		})
+
+		AfterEach(func() {
+			By("not changing either set")
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas", "trees")))
+			Expect(other).To(Equal(stringset.New("monkeys", "bananas", "trees")))
+		})
+
+		It("subtracts all members", func() {
+			Expect(set.Subtract(other)).To(Equal(stringset.New()))
+		})
+
+		It("intersects all members", func() {
+			Expect(set.Intersection(other)).To(Equal(stringset.New("monkeys", "bananas", "trees")))
+		})
+
+		It("includes all members in the union", func() {
+			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas", "trees")))
+		})
+
+		It("subtracts all members from the symmetric difference", func() {
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New()))
+		})
+
+		It("is a subset of the other", func() {
+			Expect(set.IsSubset(other)).To(BeTrue())
+		})
+
+		It("is not a proper subset the other", func() {
+			Expect(set.IsProperSubset(other)).To(BeFalse())
+		})
+
+		It("is a superset of the other", func() {
+			Expect(set.IsSuperset(other)).To(BeTrue())
+		})
+	})
+
 	Context("when it has members and the other set intersects", func() {
 		BeforeEach(func() {
 			set = stringset.New("monkeys", "bananas")
