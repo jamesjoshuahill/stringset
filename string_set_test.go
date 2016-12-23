@@ -45,6 +45,10 @@ var _ = Describe("StringSet", func() {
 		It("is not a proper subset of itself", func() {
 			Expect(set.IsProperSubset(set)).To(BeFalse())
 		})
+
+		It("is a superset of itself", func() {
+			Expect(set.IsSuperset(set)).To(BeTrue())
+		})
 	})
 
 	Context("when it has one member", func() {
@@ -78,6 +82,10 @@ var _ = Describe("StringSet", func() {
 
 		It("is not a proper subset of itself", func() {
 			Expect(set.IsProperSubset(set)).To(BeFalse())
+		})
+
+		It("is a superset of itself", func() {
+			Expect(set.IsSuperset(set)).To(BeTrue())
 		})
 	})
 
@@ -118,6 +126,10 @@ var _ = Describe("StringSet", func() {
 		It("is not a proper subset of itself", func() {
 			Expect(set.IsProperSubset(set)).To(BeFalse())
 		})
+
+		It("is a superset of itself", func() {
+			Expect(set.IsSuperset(set)).To(BeTrue())
+		})
 	})
 
 	Context("when empty and the other set has a member", func() {
@@ -154,6 +166,10 @@ var _ = Describe("StringSet", func() {
 
 		It("is a proper subset the other", func() {
 			Expect(set.IsProperSubset(other)).To(BeTrue())
+		})
+
+		It("is not a superset of the other", func() {
+			Expect(set.IsSuperset(other)).To(BeFalse())
 		})
 	})
 
@@ -192,6 +208,10 @@ var _ = Describe("StringSet", func() {
 		It("is not a proper subset the other", func() {
 			Expect(set.IsProperSubset(other)).To(BeFalse())
 		})
+
+		It("is a superset of the other", func() {
+			Expect(set.IsSuperset(other)).To(BeTrue())
+		})
 	})
 
 	Context("when it has members and is a subset of the other set", func() {
@@ -228,6 +248,10 @@ var _ = Describe("StringSet", func() {
 
 		It("is a proper subset the other", func() {
 			Expect(set.IsProperSubset(other)).To(BeTrue())
+		})
+
+		It("is not a superset of the other", func() {
+			Expect(set.IsSuperset(other)).To(BeFalse())
 		})
 	})
 
@@ -266,6 +290,10 @@ var _ = Describe("StringSet", func() {
 		It("is not a proper subset the other", func() {
 			Expect(set.IsProperSubset(other)).To(BeFalse())
 		})
+
+		It("is not a superset of the other", func() {
+			Expect(set.IsSuperset(other)).To(BeFalse())
+		})
 	})
 
 	Context("when it has members and the other set does not intersect", func() {
@@ -302,6 +330,10 @@ var _ = Describe("StringSet", func() {
 
 		It("is not a proper subset the other", func() {
 			Expect(set.IsProperSubset(other)).To(BeFalse())
+		})
+
+		It("is not a superset of the other", func() {
+			Expect(set.IsSuperset(other)).To(BeFalse())
 		})
 	})
 })

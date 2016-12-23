@@ -55,6 +55,10 @@ func (s StringSet) IsProperSubset(other StringSet) bool {
 	return other.Order() > s.Order() && s.IsSubset(other)
 }
 
+func (s StringSet) IsSuperset(other StringSet) bool {
+	return other.IsSubset(s)
+}
+
 func (s StringSet) Subtract(other StringSet) StringSet {
 	var difference []string
 	for member, _ := range s.set {
