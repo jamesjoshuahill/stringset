@@ -18,6 +18,11 @@ var _ = Describe("StringSet", func() {
 			set = stringset.New()
 		})
 
+		AfterEach(func() {
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New()))
+		})
+
 		It("does not contain a member", func() {
 			Expect(set.Contains("monkeys")).To(BeFalse())
 		})
@@ -56,6 +61,11 @@ var _ = Describe("StringSet", func() {
 			set = stringset.New("monkeys")
 		})
 
+		AfterEach(func() {
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New("monkeys")))
+		})
+
 		It("contains the member", func() {
 			Expect(set.Contains("monkeys")).To(BeTrue())
 		})
@@ -92,6 +102,11 @@ var _ = Describe("StringSet", func() {
 	Context("when it has some members", func() {
 		BeforeEach(func() {
 			set = stringset.New("monkeys", "bananas", "trees")
+		})
+
+		AfterEach(func() {
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas", "trees")))
 		})
 
 		It("lists all members", func() {
@@ -138,6 +153,12 @@ var _ = Describe("StringSet", func() {
 			other = stringset.New("trees")
 		})
 
+		AfterEach(func() {
+			By("not changing either set")
+			Expect(set).To(Equal(stringset.New()))
+			Expect(other).To(Equal(stringset.New("trees")))
+		})
+
 		It("subtracts nothing", func() {
 			Expect(set.Subtract(other)).To(Equal(stringset.New()))
 		})
@@ -148,16 +169,10 @@ var _ = Describe("StringSet", func() {
 
 		It("includes all members in the union", func() {
 			Expect(set.Union(other)).To(Equal(other))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New()))
 		})
 
 		It("includes the member in the symmetric difference", func() {
 			Expect(set.SymmetricDifference(other)).To(Equal(other))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New()))
 		})
 
 		It("is a subset of the other", func() {
@@ -179,6 +194,12 @@ var _ = Describe("StringSet", func() {
 			other = stringset.New("bananas")
 		})
 
+		AfterEach(func() {
+			By("not changing either set")
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
+			Expect(other).To(Equal(stringset.New("bananas")))
+		})
+
 		It("subtracts the member in common", func() {
 			Expect(set.Subtract(other)).To(Equal(stringset.New("monkeys")))
 		})
@@ -189,16 +210,10 @@ var _ = Describe("StringSet", func() {
 
 		It("includes all members in the union", func() {
 			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("subtracts the member in common from the symmetric difference", func() {
 			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("monkeys")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("is not a subset of the other", func() {
@@ -220,6 +235,12 @@ var _ = Describe("StringSet", func() {
 			other = stringset.New("monkeys", "bananas")
 		})
 
+		AfterEach(func() {
+			By("not changing either set")
+			Expect(set).To(Equal(stringset.New("monkeys")))
+			Expect(other).To(Equal(stringset.New("monkeys", "bananas")))
+		})
+
 		It("subtracts all members", func() {
 			Expect(set.Subtract(other)).To(Equal(stringset.New()))
 		})
@@ -230,16 +251,10 @@ var _ = Describe("StringSet", func() {
 
 		It("includes all members in the union", func() {
 			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys")))
 		})
 
 		It("subtracts the member in common from the symmetric difference", func() {
 			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("bananas")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys")))
 		})
 
 		It("is a subset of the other", func() {
@@ -261,6 +276,12 @@ var _ = Describe("StringSet", func() {
 			other = stringset.New("bananas", "trees")
 		})
 
+		AfterEach(func() {
+			By("not changing either set")
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
+			Expect(other).To(Equal(stringset.New("bananas", "trees")))
+		})
+
 		It("subtracts the member in common", func() {
 			Expect(set.Subtract(other)).To(Equal(stringset.New("monkeys")))
 		})
@@ -271,16 +292,10 @@ var _ = Describe("StringSet", func() {
 
 		It("includes all members in the union", func() {
 			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas", "trees")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("subtracts the member in common from the symmetric difference", func() {
 			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("monkeys", "trees")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("is not a subset of the other", func() {
@@ -302,6 +317,12 @@ var _ = Describe("StringSet", func() {
 			other = stringset.New("trees", "sunshine")
 		})
 
+		AfterEach(func() {
+			By("not changing either set")
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
+			Expect(other).To(Equal(stringset.New("trees", "sunshine")))
+		})
+
 		It("does not subtract any members", func() {
 			Expect(set.Subtract(other)).To(Equal(stringset.New("monkeys", "bananas")))
 		})
@@ -312,16 +333,10 @@ var _ = Describe("StringSet", func() {
 
 		It("includes all members in the union", func() {
 			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas", "trees", "sunshine")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("includes all members in the symmetric difference", func() {
 			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("monkeys", "bananas", "trees", "sunshine")))
-
-			By("not changing the set")
-			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("is not a subset of the other", func() {
