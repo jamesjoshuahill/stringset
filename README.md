@@ -4,13 +4,24 @@
 
 Go convenience type for sets of strings.
 
-## Membership
+## Properties
 ```go
-animals := stringset.New("monkeys")
-animals.Contains("bananas")  // false
-
 jungle := stringset.New("monkeys", "bananas", "trees")
-jungle.Members()  //  [bananas monkeys trees]
+
+jungle.Empty()              // false
+jungle.Order()              // 3
+jungle.Members()            // [bananas monkeys trees]
+jungle.Contains("bananas")  // true
+```
+
+## Complement
+```go
+monkeys := stringset.New("monkeys")
+jungle := stringset.New("monkeys", "bananas", "trees")
+
+monkeys.IsSubset(jungle)        // true
+jungle.IsProperSubset(jungle)   // false
+jungle.IsSuperset(monkeys)      // true
 ```
 
 ## Set operations
