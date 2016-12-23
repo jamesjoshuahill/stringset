@@ -29,19 +29,19 @@ var _ = Describe("StringSet", func() {
 		Context("when the other set has a member", func() {
 			It("subtracts nothing", func() {
 				emptySet := stringset.New()
-				other := stringset.New().Add("trees")
+				other := stringset.New("trees")
 				Expect(emptySet.Subtract(other)).To(Equal(emptySet))
 			})
 
 			It("has no members in common", func() {
 				emptySet := stringset.New()
-				other := stringset.New().Add("trees")
+				other := stringset.New("trees")
 				Expect(emptySet.Intersection(other)).To(Equal(emptySet))
 			})
 
 			It("includes all members in the union", func() {
 				emptySet := stringset.New()
-				other := stringset.New().Add("trees")
+				other := stringset.New("trees")
 				Expect(emptySet.Union(other)).To(Equal(other))
 
 				By("not changing the set")
@@ -50,7 +50,7 @@ var _ = Describe("StringSet", func() {
 
 			It("includes the member in the symmetric difference", func() {
 				emptySet := stringset.New()
-				other := stringset.New().Add("trees")
+				other := stringset.New("trees")
 				Expect(emptySet.SymmetricDifference(other)).To(Equal(other))
 
 				By("not changing the set")
@@ -61,31 +61,31 @@ var _ = Describe("StringSet", func() {
 
 	Context("when it has one member", func() {
 		It("contains the member", func() {
-			set := stringset.New().Add("monkeys")
+			set := stringset.New("monkeys")
 			Expect(set.Contains("monkeys")).To(BeTrue())
 		})
 
 		It("does not contain another member", func() {
-			set := stringset.New().Add("bananas")
+			set := stringset.New("bananas")
 			Expect(set.Contains("monkeys")).To(BeFalse())
 		})
 
 		It("prints neatly", func() {
-			set := stringset.New().Add("monkeys")
+			set := stringset.New("monkeys")
 			Expect(fmt.Sprintf("%v", set)).To(Equal(`{monkeys}`))
 		})
 	})
 
 	Context("when it has some members", func() {
 		It("lists all members", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
+			set := stringset.New("monkeys", "bananas", "trees")
 			Expect(set.Members()).To(ContainElement("monkeys"))
 			Expect(set.Members()).To(ContainElement("bananas"))
 			Expect(set.Members()).To(ContainElement("trees"))
 		})
 
 		It("prints neatly", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})
+			set := stringset.New("monkeys", "bananas", "trees")
 			Expect(fmt.Sprintf("%v", set)).To(Or(
 				Equal(`{bananas monkeys trees}`),
 				Equal(`{bananas trees monkeys}`),
@@ -99,65 +99,65 @@ var _ = Describe("StringSet", func() {
 
 	Context("when the other set has a member in common", func() {
 		It("subtracts the member in common", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().Add("bananas")
-			Expect(set.Subtract(other)).To(Equal(stringset.New().Add("monkeys")))
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas")
+			Expect(set.Subtract(other)).To(Equal(stringset.New("monkeys")))
 		})
 
 		It("intersects with the member", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().Add("bananas")
-			Expect(set.Intersection(other)).To(Equal(stringset.New().Add("bananas")))
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas")
+			Expect(set.Intersection(other)).To(Equal(stringset.New("bananas")))
 		})
 
 		It("includes all members in the union", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().Add("bananas")
-			Expect(set.Union(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas")
+			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas")))
 
 			By("not changing the set")
-			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("subtracts the member in common from the symmetric difference", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().Add("bananas")
-			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys"})))
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas")
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("monkeys")))
 
 			By("not changing the set")
-			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 	})
 
 	Context("when the other set has nothing in common", func() {
 		It("does not subtract any members", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().AddSlice([]string{"trees", "sunshine"})
-			Expect(set.Subtract(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("trees", "sunshine")
+			Expect(set.Subtract(other)).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("does not intersect", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().Add("trees")
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("trees")
 			Expect(set.Intersection(other)).To(Equal(stringset.New()))
 		})
 
 		It("includes all members in the union", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().Add("trees")
-			Expect(set.Union(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})))
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("trees")
+			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas", "trees")))
 
 			By("not changing the set")
-			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 
 		It("includes all members in the symmetric difference", func() {
-			set := stringset.New().AddSlice([]string{"monkeys", "bananas"})
-			other := stringset.New().Add("trees")
-			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas", "trees"})))
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("trees")
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("monkeys", "bananas", "trees")))
 
 			By("not changing the set")
-			Expect(set).To(Equal(stringset.New().AddSlice([]string{"monkeys", "bananas"})))
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
 	})
 })

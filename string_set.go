@@ -9,32 +9,16 @@ type StringSet struct {
 	set map[string]struct{}
 }
 
-func New() StringSet {
+func New(members ...string) StringSet {
 	set := make(map[string]struct{})
+	for _, member := range members {
+		set[member] = struct{}{}
+	}
 	return StringSet{set: set}
 }
 
 func (s StringSet) String() string {
 	return fmt.Sprintf("{%s}", strings.Join(s.Members(), " "))
-}
-
-func (s StringSet) Add(member string) StringSet {
-	s.set[member] = struct{}{}
-	return s
-}
-
-func (s StringSet) AddSlice(slice []string) StringSet {
-	for _, element := range slice {
-		s.Add(element)
-	}
-	return s
-}
-
-func (s StringSet) AddSet(other StringSet) StringSet {
-	for member, _ := range other.set {
-		s.Add(member)
-	}
-	return s
 }
 
 func (s StringSet) Members() []string {
@@ -51,30 +35,30 @@ func (s StringSet) Contains(member string) bool {
 }
 
 func (s StringSet) Subtract(other StringSet) StringSet {
-	difference := New()
+	var difference []string
 	for member, _ := range s.set {
 		if !other.Contains(member) {
-			difference.Add(member)
+			difference = append(difference, member)
 		}
 	}
-	return difference
+	return New(difference...)
 }
 
 func (s StringSet) Intersection(other StringSet) StringSet {
-	intersection := New()
+	var intersection []string
 	for member, _ := range s.set {
 		if other.Contains(member) {
-			intersection.Add(member)
+			intersection = append(intersection, member)
 		}
 	}
-	return intersection
+	return New(intersection...)
 }
 
 func (s StringSet) Union(other StringSet) StringSet {
-	union := New()
-	union.AddSet(s)
-	union.AddSet(other)
-	return union
+	var union []string
+	union = append(union, s.Members()...)
+	union = append(union, other.Members()...)
+	return New(union...)
 }
 
 func (s StringSet) SymmetricDifference(other StringSet) StringSet {
