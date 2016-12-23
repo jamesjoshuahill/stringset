@@ -41,6 +41,10 @@ var _ = Describe("StringSet", func() {
 		It("is a subset of itself", func() {
 			Expect(set.IsSubset(set)).To(BeTrue())
 		})
+
+		It("is not a proper subset of itself", func() {
+			Expect(set.IsProperSubset(set)).To(BeFalse())
+		})
 	})
 
 	Context("when it has one member", func() {
@@ -70,6 +74,10 @@ var _ = Describe("StringSet", func() {
 
 		It("is a subset of itself", func() {
 			Expect(set.IsSubset(set)).To(BeTrue())
+		})
+
+		It("is not a proper subset of itself", func() {
+			Expect(set.IsProperSubset(set)).To(BeFalse())
 		})
 	})
 
@@ -106,6 +114,10 @@ var _ = Describe("StringSet", func() {
 		It("is a subset of itself", func() {
 			Expect(set.IsSubset(set)).To(BeTrue())
 		})
+
+		It("is not a proper subset of itself", func() {
+			Expect(set.IsProperSubset(set)).To(BeFalse())
+		})
 	})
 
 	Context("when empty and the other set has a member", func() {
@@ -138,6 +150,10 @@ var _ = Describe("StringSet", func() {
 
 		It("is a subset of the other", func() {
 			Expect(set.IsSubset(other)).To(BeTrue())
+		})
+
+		It("is a proper subset the other", func() {
+			Expect(set.IsProperSubset(other)).To(BeTrue())
 		})
 	})
 
@@ -172,6 +188,47 @@ var _ = Describe("StringSet", func() {
 		It("is not a subset of the other", func() {
 			Expect(set.IsSubset(other)).To(BeFalse())
 		})
+
+		It("is not a proper subset the other", func() {
+			Expect(set.IsProperSubset(other)).To(BeFalse())
+		})
+	})
+
+	Context("when it has members and is a subset of the other set", func() {
+		BeforeEach(func() {
+			set = stringset.New("monkeys")
+			other = stringset.New("monkeys", "bananas")
+		})
+
+		It("subtracts all members", func() {
+			Expect(set.Subtract(other)).To(Equal(stringset.New()))
+		})
+
+		It("intersects", func() {
+			Expect(set.Intersection(other)).To(Equal(stringset.New("monkeys")))
+		})
+
+		It("includes all members in the union", func() {
+			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas")))
+
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New("monkeys")))
+		})
+
+		It("subtracts the member in common from the symmetric difference", func() {
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("bananas")))
+
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New("monkeys")))
+		})
+
+		It("is a subset of the other", func() {
+			Expect(set.IsSubset(other)).To(BeTrue())
+		})
+
+		It("is a proper subset the other", func() {
+			Expect(set.IsProperSubset(other)).To(BeTrue())
+		})
 	})
 
 	Context("when it has members and the other set intersects", func() {
@@ -205,6 +262,10 @@ var _ = Describe("StringSet", func() {
 		It("is not a subset of the other", func() {
 			Expect(set.IsSubset(other)).To(BeFalse())
 		})
+
+		It("is not a proper subset the other", func() {
+			Expect(set.IsProperSubset(other)).To(BeFalse())
+		})
 	})
 
 	Context("when it has members and the other set does not intersect", func() {
@@ -237,6 +298,10 @@ var _ = Describe("StringSet", func() {
 
 		It("is not a subset of the other", func() {
 			Expect(set.IsSubset(other)).To(BeFalse())
+		})
+
+		It("is not a proper subset the other", func() {
+			Expect(set.IsProperSubset(other)).To(BeFalse())
 		})
 	})
 })
