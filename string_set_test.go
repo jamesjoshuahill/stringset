@@ -31,6 +31,11 @@ var _ = Describe("StringSet", func() {
 			Expect(emptySet.Empty()).To(BeTrue())
 		})
 
+		It("has an order of 0", func() {
+			emptySet := stringset.New()
+			Expect(emptySet.Order()).To(Equal(0))
+		})
+
 		Context("when the other set has a member", func() {
 			It("subtracts nothing", func() {
 				emptySet := stringset.New()
@@ -84,6 +89,11 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New("monkeys")
 			Expect(set.Empty()).To(BeFalse())
 		})
+
+		It("has an order of one", func() {
+			set := stringset.New("monkeys")
+			Expect(set.Order()).To(Equal(1))
+		})
 	})
 
 	Context("when it has some members", func() {
@@ -109,6 +119,11 @@ var _ = Describe("StringSet", func() {
 		It("is not empty", func() {
 			set := stringset.New("monkeys", "bananas", "trees")
 			Expect(set.Empty()).To(BeFalse())
+		})
+
+		It("has an order of three", func() {
+			set := stringset.New("monkeys", "bananas", "trees")
+			Expect(set.Order()).To(Equal(3))
 		})
 	})
 

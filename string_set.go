@@ -25,6 +25,10 @@ func (s StringSet) Empty() bool {
 	return len(s.set) == 0
 }
 
+func (s StringSet) Order() int {
+	return len(s.set)
+}
+
 func (s StringSet) Members() []string {
 	members := []string{}
 	for member, _ := range s.set {
