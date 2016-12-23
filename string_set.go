@@ -29,6 +29,11 @@ func (s StringSet) Order() int {
 	return len(s.set)
 }
 
+func (s StringSet) Contains(member string) bool {
+	_, ok := s.set[member]
+	return ok
+}
+
 func (s StringSet) Members() []string {
 	members := []string{}
 	for member, _ := range s.set {
@@ -37,9 +42,13 @@ func (s StringSet) Members() []string {
 	return members
 }
 
-func (s StringSet) Contains(member string) bool {
-	_, ok := s.set[member]
-	return ok
+func (s StringSet) IsSubset(other StringSet) bool {
+	for member, _ := range s.set {
+		if !other.Contains(member) {
+			return false
+		}
+	}
+	return true
 }
 
 func (s StringSet) Subtract(other StringSet) StringSet {

@@ -36,36 +36,9 @@ var _ = Describe("StringSet", func() {
 			Expect(emptySet.Order()).To(Equal(0))
 		})
 
-		Context("when the other set has a member", func() {
-			It("subtracts nothing", func() {
-				emptySet := stringset.New()
-				other := stringset.New("trees")
-				Expect(emptySet.Subtract(other)).To(Equal(emptySet))
-			})
-
-			It("has no members in common", func() {
-				emptySet := stringset.New()
-				other := stringset.New("trees")
-				Expect(emptySet.Intersection(other)).To(Equal(emptySet))
-			})
-
-			It("includes all members in the union", func() {
-				emptySet := stringset.New()
-				other := stringset.New("trees")
-				Expect(emptySet.Union(other)).To(Equal(other))
-
-				By("not changing the set")
-				Expect(emptySet).To(Equal(stringset.New()))
-			})
-
-			It("includes the member in the symmetric difference", func() {
-				emptySet := stringset.New()
-				other := stringset.New("trees")
-				Expect(emptySet.SymmetricDifference(other)).To(Equal(other))
-
-				By("not changing the set")
-				Expect(emptySet).To(Equal(stringset.New()))
-			})
+		It("is a subset of itself", func() {
+			emptySet := stringset.New()
+			Expect(emptySet.IsSubset(emptySet)).To(BeTrue())
 		})
 	})
 
@@ -93,6 +66,11 @@ var _ = Describe("StringSet", func() {
 		It("has an order of one", func() {
 			set := stringset.New("monkeys")
 			Expect(set.Order()).To(Equal(1))
+		})
+
+		It("is a subset of itself", func() {
+			set := stringset.New("monkeys")
+			Expect(set.IsSubset(set)).To(BeTrue())
 		})
 	})
 
@@ -125,16 +103,59 @@ var _ = Describe("StringSet", func() {
 			set := stringset.New("monkeys", "bananas", "trees")
 			Expect(set.Order()).To(Equal(3))
 		})
+
+		It("is a subset of itself", func() {
+			set := stringset.New("monkeys", "bananas", "trees")
+			Expect(set.IsSubset(set)).To(BeTrue())
+		})
 	})
 
-	Context("when the other set has a member in common", func() {
+	Context("when empty and the other set has a member", func() {
+		It("subtracts nothing", func() {
+			emptySet := stringset.New()
+			other := stringset.New("trees")
+			Expect(emptySet.Subtract(other)).To(Equal(emptySet))
+		})
+
+		It("has no members in common", func() {
+			emptySet := stringset.New()
+			other := stringset.New("trees")
+			Expect(emptySet.Intersection(other)).To(Equal(emptySet))
+		})
+
+		It("includes all members in the union", func() {
+			emptySet := stringset.New()
+			other := stringset.New("trees")
+			Expect(emptySet.Union(other)).To(Equal(other))
+
+			By("not changing the set")
+			Expect(emptySet).To(Equal(stringset.New()))
+		})
+
+		It("includes the member in the symmetric difference", func() {
+			emptySet := stringset.New()
+			other := stringset.New("trees")
+			Expect(emptySet.SymmetricDifference(other)).To(Equal(other))
+
+			By("not changing the set")
+			Expect(emptySet).To(Equal(stringset.New()))
+		})
+
+		It("is a subset of the other", func() {
+			emptySet := stringset.New()
+			other := stringset.New("trees")
+			Expect(emptySet.IsSubset(other)).To(BeTrue())
+		})
+	})
+
+	Context("when it has members and the other set is a subset", func() {
 		It("subtracts the member in common", func() {
 			set := stringset.New("monkeys", "bananas")
 			other := stringset.New("bananas")
 			Expect(set.Subtract(other)).To(Equal(stringset.New("monkeys")))
 		})
 
-		It("intersects with the member", func() {
+		It("intersects", func() {
 			set := stringset.New("monkeys", "bananas")
 			other := stringset.New("bananas")
 			Expect(set.Intersection(other)).To(Equal(stringset.New("bananas")))
@@ -157,9 +178,53 @@ var _ = Describe("StringSet", func() {
 			By("not changing the set")
 			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
 		})
+
+		It("is not a subset of the other", func() {
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas")
+			Expect(set.IsSubset(other)).To(BeFalse())
+		})
 	})
 
-	Context("when the other set has nothing in common", func() {
+	Context("when it has members and the other set intersects", func() {
+		It("subtracts the member in common", func() {
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas", "trees")
+			Expect(set.Subtract(other)).To(Equal(stringset.New("monkeys")))
+		})
+
+		It("intersects", func() {
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas", "trees")
+			Expect(set.Intersection(other)).To(Equal(stringset.New("bananas")))
+		})
+
+		It("includes all members in the union", func() {
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas", "trees")
+			Expect(set.Union(other)).To(Equal(stringset.New("monkeys", "bananas", "trees")))
+
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
+		})
+
+		It("subtracts the member in common from the symmetric difference", func() {
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas", "trees")
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("monkeys", "trees")))
+
+			By("not changing the set")
+			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
+		})
+
+		It("is not a subset of the other", func() {
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("bananas", "trees")
+			Expect(set.IsSubset(other)).To(BeFalse())
+		})
+	})
+
+	Context("when it has members and the other set does not intersect", func() {
 		It("does not subtract any members", func() {
 			set := stringset.New("monkeys", "bananas")
 			other := stringset.New("trees", "sunshine")
@@ -188,6 +253,12 @@ var _ = Describe("StringSet", func() {
 
 			By("not changing the set")
 			Expect(set).To(Equal(stringset.New("monkeys", "bananas")))
+		})
+
+		It("is not a subset of the other", func() {
+			set := stringset.New("monkeys", "bananas")
+			other := stringset.New("trees")
+			Expect(set.IsSubset(other)).To(BeFalse())
 		})
 	})
 })
