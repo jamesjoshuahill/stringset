@@ -4,24 +4,24 @@
 
 Go value type for sets of strings.
 
-## Properties
 ```go
 jungle := stringset.New("monkeys", "bananas", "trees")
 
-jungle.Empty()              // false
-jungle.Order()              // 3
-jungle.Members()            // [bananas monkeys trees]
-jungle.Contains("bananas")  // true
+jungle.Empty()   // false
+jungle.Order()   // 3
+jungle.String()  // {bananas monkeys trees}
 ```
 
-## Complement
+## Membership
 ```go
 monkeys := stringset.New("monkeys")
 jungle := stringset.New("monkeys", "bananas", "trees")
 
+jungle.Members()                // [bananas monkeys trees]
+jungle.Contains("monkeys")      // true
+jungle.IsSuperset(monkeys)      // true
 monkeys.IsSubset(jungle)        // true
 jungle.IsProperSubset(jungle)   // false
-jungle.IsSuperset(monkeys)      // true
 ```
 
 ## Set operations
