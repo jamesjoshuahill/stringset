@@ -65,12 +65,12 @@ func (s StringSet) IsProperSubset(other StringSet) bool {
 	return other.Order() > s.Order() && s.IsSubset(other)
 }
 
-// IsSuperset returns true is s is a superset of other.
+// IsSuperset returns true if s is a superset of other.
 func (s StringSet) IsSuperset(other StringSet) bool {
 	return other.IsSubset(s)
 }
 
-// Subtract returns a StringSet of members of s not in other.
+// Subtract returns a new StringSet of members of s not in other.
 func (s StringSet) Subtract(other StringSet) StringSet {
 	var difference []string
 	for member := range s.set {
@@ -81,7 +81,7 @@ func (s StringSet) Subtract(other StringSet) StringSet {
 	return New(difference...)
 }
 
-// Intersection returns a StringSet of members in both s and other.
+// Intersection returns a new StringSet of members in both s and other.
 func (s StringSet) Intersection(other StringSet) StringSet {
 	var intersection []string
 	for member := range s.set {
@@ -92,7 +92,7 @@ func (s StringSet) Intersection(other StringSet) StringSet {
 	return New(intersection...)
 }
 
-// Union returns a StringSet of all the members of s and other.
+// Union returns a new StringSet of all the members of s and other.
 func (s StringSet) Union(other StringSet) StringSet {
 	var union []string
 	union = append(union, s.Members()...)
@@ -100,7 +100,7 @@ func (s StringSet) Union(other StringSet) StringSet {
 	return New(union...)
 }
 
-// SymmetricDifference returns a StringSet of the members of s and other
+// SymmetricDifference returns a new StringSet of the members of s and other
 // that are not in both sets.
 func (s StringSet) SymmetricDifference(other StringSet) StringSet {
 	union := s.Union(other)
