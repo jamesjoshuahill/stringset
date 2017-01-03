@@ -13,7 +13,7 @@ var _ = Describe("StringSet", func() {
 	var set stringset.StringSet
 	var other stringset.StringSet
 
-	Context("when is has no members", func() {
+	Context("when it has no members", func() {
 		BeforeEach(func() {
 			set = stringset.New()
 		})
@@ -168,11 +168,11 @@ var _ = Describe("StringSet", func() {
 		})
 
 		It("includes all members in the union", func() {
-			Expect(set.Union(other)).To(Equal(other))
+			Expect(set.Union(other)).To(Equal(stringset.New("trees")))
 		})
 
 		It("includes the member in the symmetric difference", func() {
-			Expect(set.SymmetricDifference(other)).To(Equal(other))
+			Expect(set.SymmetricDifference(other)).To(Equal(stringset.New("trees")))
 		})
 
 		It("is a subset of the other", func() {
