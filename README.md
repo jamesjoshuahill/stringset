@@ -7,9 +7,10 @@ Go value type for sets of strings.
 ```go
 jungle := stringset.New("monkeys", "bananas", "trees")
 
-jungle.Empty()   // false
-jungle.Order()   // 3
-jungle.String()  // {bananas monkeys trees}
+jungle.Empty()       // false
+jungle.Order()       // 3
+jungle.Members()     // []string{"bananas", "monkeys", "trees"}
+fmt.Println(jungle)  // "{bananas monkeys trees}"
 ```
 
 ## Membership
@@ -17,11 +18,10 @@ jungle.String()  // {bananas monkeys trees}
 monkeys := stringset.New("monkeys")
 jungle := stringset.New("monkeys", "bananas", "trees")
 
-jungle.Members()                // [bananas monkeys trees]
-jungle.Contains("monkeys")      // true
-jungle.IsSuperset(monkeys)      // true
-monkeys.IsSubset(jungle)        // true
-jungle.IsProperSubset(jungle)   // false
+jungle.Contains("monkeys")     // true
+jungle.IsSuperset(monkeys)     // true
+monkeys.IsSubset(jungle)       // true
+jungle.IsProperSubset(jungle)  // false
 ```
 
 ## Set operations
@@ -29,8 +29,8 @@ jungle.IsProperSubset(jungle)   // false
 jungle := stringset.New("monkeys", "bananas", "trees")
 forest := stringset.New("trees", "wolves")
 
-jungle.Intersection(forest)         //  {trees}
-jungle.Subtract(forest)             //  {monkeys bananas}
-jungle.SymmetricDifference(forest)  //  {monkeys bananas wolves}
-jungle.Union(forest)                //  {monkeys bananas trees wolves}
+jungle.Intersection(forest)         // StringSet{trees}
+jungle.Subtract(forest)             // StringSet{monkeys bananas}
+jungle.SymmetricDifference(forest)  // StringSet{monkeys bananas wolves}
+jungle.Union(forest)                // StringSet{monkeys bananas trees wolves}
 ```
