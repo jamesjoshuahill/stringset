@@ -7,10 +7,16 @@ import (
 	"github.com/pborman/uuid"
 )
 
+var sliceOf100StringsIncludingMonkeysAtIndex1 = sliceOfStringsIncludingMonkeys(100, 0)
+var sliceOf100StringsIncludingMonkeysAtIndex25 = sliceOfStringsIncludingMonkeys(100, 24)
+var sliceOf100StringsIncludingMonkeysAtIndex50 = sliceOfStringsIncludingMonkeys(100, 49)
+var sliceOf100StringsIncludingMonkeysAtIndex75 = sliceOfStringsIncludingMonkeys(100, 74)
+var sliceOf100StringsIncludingMonkeysAtIndex100 = sliceOfStringsIncludingMonkeys(100, 99)
+var sliceOf100Strings = sliceOfStrings(100)
+
 func BenchmarkSliceForLoopMonkeyAtIndex1(b *testing.B) {
-	slice := sliceOfStringsIncludingMonkeys(100, 0)
 	for n := 0; n < b.N; n++ {
-		for _, element := range slice {
+		for _, element := range sliceOf100StringsIncludingMonkeysAtIndex1 {
 			if element == "monkeys" {
 				break
 			}
@@ -19,9 +25,8 @@ func BenchmarkSliceForLoopMonkeyAtIndex1(b *testing.B) {
 }
 
 func BenchmarkSliceForLoopMonkeyAtIndex25(b *testing.B) {
-	slice := sliceOfStringsIncludingMonkeys(100, 24)
 	for n := 0; n < b.N; n++ {
-		for _, element := range slice {
+		for _, element := range sliceOf100StringsIncludingMonkeysAtIndex25 {
 			if element == "monkeys" {
 				break
 			}
@@ -30,9 +35,8 @@ func BenchmarkSliceForLoopMonkeyAtIndex25(b *testing.B) {
 }
 
 func BenchmarkSliceForLoopMonkeyAtIndex50(b *testing.B) {
-	slice := sliceOfStringsIncludingMonkeys(100, 49)
 	for n := 0; n < b.N; n++ {
-		for _, element := range slice {
+		for _, element := range sliceOf100StringsIncludingMonkeysAtIndex50 {
 			if element == "monkeys" {
 				break
 			}
@@ -41,9 +45,8 @@ func BenchmarkSliceForLoopMonkeyAtIndex50(b *testing.B) {
 }
 
 func BenchmarkSliceForLoopMonkeyAtIndex75(b *testing.B) {
-	slice := sliceOfStringsIncludingMonkeys(100, 74)
 	for n := 0; n < b.N; n++ {
-		for _, element := range slice {
+		for _, element := range sliceOf100StringsIncludingMonkeysAtIndex75 {
 			if element == "monkeys" {
 				break
 			}
@@ -52,9 +55,8 @@ func BenchmarkSliceForLoopMonkeyAtIndex75(b *testing.B) {
 }
 
 func BenchmarkSliceForLoopMonkeyAtIndex100(b *testing.B) {
-	slice := sliceOfStringsIncludingMonkeys(100, 99)
 	for n := 0; n < b.N; n++ {
-		for _, element := range slice {
+		for _, element := range sliceOf100StringsIncludingMonkeysAtIndex100 {
 			if element == "monkeys" {
 				break
 			}
@@ -63,9 +65,8 @@ func BenchmarkSliceForLoopMonkeyAtIndex100(b *testing.B) {
 }
 
 func BenchmarkSliceForLoopNoMonkey(b *testing.B) {
-	slice := sliceOfStrings(100)
 	for n := 0; n < b.N; n++ {
-		for _, element := range slice {
+		for _, element := range sliceOf100Strings {
 			if element == "monkeys" {
 				break
 			}
@@ -74,42 +75,42 @@ func BenchmarkSliceForLoopNoMonkey(b *testing.B) {
 }
 
 func BenchmarkStringSetContainsMonkeyAtIndex1(b *testing.B) {
-	set := stringset.New(sliceOfStringsIncludingMonkeys(100, 0)...)
+	set := stringset.New(sliceOf100StringsIncludingMonkeysAtIndex1...)
 	for n := 0; n < b.N; n++ {
 		set.Contains("monkeys")
 	}
 }
 
 func BenchmarkStringSetContainsMonkeyAtIndex25(b *testing.B) {
-	set := stringset.New(sliceOfStringsIncludingMonkeys(100, 24)...)
+	set := stringset.New(sliceOf100StringsIncludingMonkeysAtIndex25...)
 	for n := 0; n < b.N; n++ {
 		set.Contains("monkeys")
 	}
 }
 
 func BenchmarkStringSetContainsMonkeyAtIndex50(b *testing.B) {
-	set := stringset.New(sliceOfStringsIncludingMonkeys(100, 49)...)
+	set := stringset.New(sliceOf100StringsIncludingMonkeysAtIndex50...)
 	for n := 0; n < b.N; n++ {
 		set.Contains("monkeys")
 	}
 }
 
 func BenchmarkStringSetContainsMonkeyAtIndex75(b *testing.B) {
-	set := stringset.New(sliceOfStringsIncludingMonkeys(100, 74)...)
+	set := stringset.New(sliceOf100StringsIncludingMonkeysAtIndex75...)
 	for n := 0; n < b.N; n++ {
 		set.Contains("monkeys")
 	}
 }
 
 func BenchmarkStringSetContainsMonkeyAtIndex100(b *testing.B) {
-	set := stringset.New(sliceOfStringsIncludingMonkeys(100, 99)...)
+	set := stringset.New(sliceOf100StringsIncludingMonkeysAtIndex100...)
 	for n := 0; n < b.N; n++ {
 		set.Contains("monkeys")
 	}
 }
 
 func BenchmarkStringSetContainsNoMonkey(b *testing.B) {
-	set := stringset.New(sliceOfStrings(100)...)
+	set := stringset.New(sliceOf100Strings...)
 	for n := 0; n < b.N; n++ {
 		set.Contains("monkeys")
 	}
@@ -117,17 +118,14 @@ func BenchmarkStringSetContainsNoMonkey(b *testing.B) {
 
 func sliceOfStrings(length int) []string {
 	var slice []string
-
 	for i := 0; i < length; i++ {
 		slice = append(slice, uuid.New())
 	}
-
 	return slice
 }
 
 func sliceOfStringsIncludingMonkeys(length, monkeysIndex int) []string {
 	var slice []string
-
 	for i := 0; i < length; i++ {
 		if i == monkeysIndex {
 			slice = append(slice, "monkeys")
@@ -135,6 +133,5 @@ func sliceOfStringsIncludingMonkeys(length, monkeysIndex int) []string {
 			slice = append(slice, uuid.New())
 		}
 	}
-
 	return slice
 }
