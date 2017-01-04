@@ -72,38 +72,51 @@ func (s StringSet) IsSuperset(other StringSet) bool {
 
 // Subtract returns a new StringSet of members of s not in other.
 func (s StringSet) Subtract(other StringSet) StringSet {
-	var difference []string
+	set := make(map[string]struct{})
 	for member := range s.set {
 		if !other.Contains(member) {
-			difference = append(difference, member)
+			set[member] = struct{}{}
 		}
 	}
-	return New(difference...)
+	return StringSet{set: set}
 }
 
 // Intersection returns a new StringSet of members in both s and other.
 func (s StringSet) Intersection(other StringSet) StringSet {
-	var intersection []string
+	set := make(map[string]struct{})
 	for member := range s.set {
 		if other.Contains(member) {
-			intersection = append(intersection, member)
+			set[member] = struct{}{}
 		}
 	}
-	return New(intersection...)
+	return StringSet{set: set}
 }
 
 // Union returns a new StringSet of all the members of s and other.
 func (s StringSet) Union(other StringSet) StringSet {
-	var union []string
-	union = append(union, s.Members()...)
-	union = append(union, other.Members()...)
-	return New(union...)
+	set := make(map[string]struct{})
+	for member := range s.set {
+		set[member] = struct{}{}
+	}
+	for member := range other.set {
+		set[member] = struct{}{}
+	}
+	return StringSet{set: set}
 }
 
 // SymmetricDifference returns a new StringSet of the members of s and other
 // that are not in both sets.
 func (s StringSet) SymmetricDifference(other StringSet) StringSet {
-	union := s.Union(other)
-	intersection := s.Intersection(other)
-	return union.Subtract(intersection)
+	set := make(map[string]struct{})
+	for member := range s.set {
+		if !other.Contains(member) {
+			set[member] = struct{}{}
+		}
+	}
+	for member := range other.set {
+		if !s.Contains(member) {
+			set[member] = struct{}{}
+		}
+	}
+	return StringSet{set: set}
 }
