@@ -25,8 +25,8 @@ func (s StringSet) String() string {
 	return fmt.Sprintf("{%s}", strings.Join(s.Members(), " "))
 }
 
-// Empty returns true when s has no members.
-func (s StringSet) Empty() bool {
+// IsEmpty returns true when s has no members.
+func (s StringSet) IsEmpty() bool {
 	return len(s.set) == 0
 }
 

@@ -7,7 +7,7 @@ Go value type for sets of strings.
 ```go
 jungle := stringset.New("monkeys", "bananas", "trees")
 
-jungle.Empty()       // false
+jungle.IsEmpty()     // false
 jungle.Length()      // 3
 jungle.Members()     // []string{"bananas", "monkeys", "trees"}
 fmt.Println(jungle)  // "{bananas monkeys trees}"

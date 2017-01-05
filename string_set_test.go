@@ -36,7 +36,7 @@ var _ = Describe("StringSet", func() {
 		})
 
 		It("is empty", func() {
-			Expect(set.Empty()).To(BeTrue())
+			Expect(set.IsEmpty()).To(BeTrue())
 		})
 
 		It("has a length of 0", func() {
@@ -79,7 +79,7 @@ var _ = Describe("StringSet", func() {
 		})
 
 		It("is not empty", func() {
-			Expect(set.Empty()).To(BeFalse())
+			Expect(set.IsEmpty()).To(BeFalse())
 		})
 
 		It("has a length of 1", func() {
@@ -127,7 +127,7 @@ var _ = Describe("StringSet", func() {
 		})
 
 		It("is not empty", func() {
-			Expect(set.Empty()).To(BeFalse())
+			Expect(set.IsEmpty()).To(BeFalse())
 		})
 
 		It("has a length of 3", func() {
