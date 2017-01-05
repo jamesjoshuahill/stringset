@@ -30,8 +30,8 @@ func (s StringSet) Empty() bool {
 	return len(s.set) == 0
 }
 
-// Order returns the number of members in s.
-func (s StringSet) Order() int {
+// Length returns the number of members in s.
+func (s StringSet) Length() int {
 	return len(s.set)
 }
 
@@ -62,7 +62,7 @@ func (s StringSet) IsSubset(other StringSet) bool {
 
 // IsProperSubset returns true if s is a proper subset of other.
 func (s StringSet) IsProperSubset(other StringSet) bool {
-	return other.Order() > s.Order() && s.IsSubset(other)
+	return other.Length() > s.Length() && s.IsSubset(other)
 }
 
 // IsSuperset returns true if s is a superset of other.

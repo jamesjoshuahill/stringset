@@ -39,8 +39,8 @@ var _ = Describe("StringSet", func() {
 			Expect(set.Empty()).To(BeTrue())
 		})
 
-		It("has an order of 0", func() {
-			Expect(set.Order()).To(Equal(0))
+		It("has a length of 0", func() {
+			Expect(set.Length()).To(Equal(0))
 		})
 
 		It("is a subset of itself", func() {
@@ -82,8 +82,8 @@ var _ = Describe("StringSet", func() {
 			Expect(set.Empty()).To(BeFalse())
 		})
 
-		It("has an order of one", func() {
-			Expect(set.Order()).To(Equal(1))
+		It("has a length of 1", func() {
+			Expect(set.Length()).To(Equal(1))
 		})
 
 		It("is a subset of itself", func() {
@@ -130,8 +130,8 @@ var _ = Describe("StringSet", func() {
 			Expect(set.Empty()).To(BeFalse())
 		})
 
-		It("has an order of three", func() {
-			Expect(set.Order()).To(Equal(3))
+		It("has a length of 3", func() {
+			Expect(set.Length()).To(Equal(3))
 		})
 
 		It("is a subset of itself", func() {

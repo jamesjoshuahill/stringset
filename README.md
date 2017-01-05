@@ -8,7 +8,7 @@ Go value type for sets of strings.
 jungle := stringset.New("monkeys", "bananas", "trees")
 
 jungle.Empty()       // false
-jungle.Order()       // 3
+jungle.Length()      // 3
 jungle.Members()     // []string{"bananas", "monkeys", "trees"}
 fmt.Println(jungle)  // "{bananas monkeys trees}"
 ```
