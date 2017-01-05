@@ -41,7 +41,7 @@ func (s StringSet) Contains(member string) bool {
 	return ok
 }
 
-// Members returns a slice of the members of s.
+// Members returns a slice of the members of s, order is not guaranteed.
 func (s StringSet) Members() []string {
 	members := []string{}
 	for member := range s.set {
