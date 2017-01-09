@@ -9,7 +9,7 @@ jungle := stringset.New("monkeys", "bananas", "trees")
 
 jungle.IsEmpty()     // false
 jungle.Length()      // 3
-jungle.Members()     // []string{"bananas", "monkeys", "trees"}
+jungle.Members()     // []string{"trees", "bananas", "monkeys"}
 fmt.Println(jungle)  // "{trees bananas monkeys}"
 ```
 
@@ -29,8 +29,8 @@ jungle.IsProperSubset(jungle)  // false
 jungle := stringset.New("monkeys", "bananas", "trees")
 forest := stringset.New("trees", "wolves")
 
-jungle.Intersection(forest)         // StringSet{trees}
-jungle.Subtract(forest)             // StringSet{monkeys bananas}
-jungle.SymmetricDifference(forest)  // StringSet{monkeys bananas wolves}
-jungle.Union(forest)                // StringSet{monkeys bananas trees wolves}
+jungle.Intersection(forest)         // {trees}
+jungle.Subtract(forest)             // {monkeys bananas}
+jungle.SymmetricDifference(forest)  // {monkeys bananas wolves}
+jungle.Union(forest)                // {monkeys bananas trees wolves}
 ```
